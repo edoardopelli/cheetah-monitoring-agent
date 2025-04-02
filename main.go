@@ -104,11 +104,19 @@ func sendMetrics(metrics Metrics, serverURL string) error {
 }
 
 func main() {
-	// Read server URL from environment variable MONITORING_SERVER_URL
-	serverURL := os.Getenv("MONITORING_SERVER_URL")
-	if serverURL == "" {
-		serverURL = "http://localhost:8080/api/metrics"
+	// Read server host and port from environment variables
+	host := os.Getenv("MONITORING_SERVER_HOST")
+	if host == "" {
+		host = "localhost"
 	}
+	port := os.Getenv("MONITORING_SERVER_PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	// Build the full URL by concatenating host, port and the API endpoint path
+	serverURL := "http://" + host + ":" + port + "/api/metrics"
+	fmt.Printf("Using server URL: %s\n", serverURL)
 
 	// Read send interval (in seconds) from environment variable SEND_INTERVAL
 	sendIntervalStr := os.Getenv("SEND_INTERVAL")
