@@ -1,0 +1,21 @@
+/usr/bin/cheetah-monitoring_amd64
+[Unit]
+Description=Cheetah Monitoring
+After=network.target
+
+[Service]
+# Specifica il percorso completo del binario
+ExecStart=/usr/bin/cheetah-monitoring_amd64
+# Imposta le opzioni per il riavvio automatico in caso di crash
+Restart=always
+# Specifica l'utente e il gruppo con cui eseguire il servizio (modifica se necessario)
+User=docker
+Group=docker
+# Eventuali variabili d'ambiente
+Environment="PORTS=8080, 9990, 80, 443"
+Environment="MONITORING_SERVER_HOST=192.168.8.90"
+Environment="MONITORING_SERVER_PORT=12050"
+Environment="SEND_INTERVAL=60"
+
+[Install]
+WantedBy=multi-user.target
